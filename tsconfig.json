@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es2016",                                  /* Set the JavaScript language version for emitted JavaScript. */
+    "module": "commonjs",                                /* Specify what module code is generated. */
+    "outDir": "./dist",                                  /* Specify the output folder for compiled JavaScript files. */
+    "rootDir": "./src",                                  /* Specify the root directory of your TypeScript files. */
+    "strict": true,                                      /* Enable strict type checking options. */
+    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. */
+    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+  },
+  "include": ["src/**/*"]                                /* Include all TypeScript files in the src directory. */
+}
