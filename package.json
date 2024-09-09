@@ -27,11 +27,12 @@
   "name": "hotspot-backend",
   "description": "",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "nodemon dist/index.js",
-    "dev": "nodemon --watch src --exec 'npm run build && node dist/index.js'"
+    "dev": "nodemon --watch src --exec 'npm run build && node dist/index.js'",
+    "nodemon": "nodemon --watch 'src/**/*.ts' --exec ts-node src/index.ts"
   },
   "repository": {
     "type": "git",
