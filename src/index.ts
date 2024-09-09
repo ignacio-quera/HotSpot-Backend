@@ -2,35 +2,34 @@
 import express from 'express';
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const User = require('./models/user');
+const registerRoutes = require('./routes/register');
+const loginRoutes = require('./routes/login');
+const dashboadRoutes = require('./routes/dashboard');
+const verifyToken = require('./routes/validate-token');
+const app = express();
 
 mongoose.set('strictQuery', false);
 
-const app = express();
 
 if(process.env.NODE_ENV !== 'production'){
     dotenv.config();
-
+    
 }
 const PORT = process.env.PORT || 3000;
+
+// Usar las rutas
+app.use(express.json());
+app.use('/api/user', registerRoutes);  // Ruta para registro
+app.use('/api/user', loginRoutes);     // Ruta para login
+
+// Middlewares
+app.use('/api/dashboard', verifyToken, dashboadRoutes);
+
 
 // Handling GET / Request
 app.get('/', (req, res) => {
     res.send('Welcome to typescript backend!!!');
 })
-
-// Handling POST /users Request
-
-const user = new User({
-    name: 'Testing User',
-    email: 'testing.user@gmail.com',
-    password: 'password'
-
-});
-
-app.get('/users', async (req, res) => {
-    res.send(user);
-});
 
 // Server setup
 
