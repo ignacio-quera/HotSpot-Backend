@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
 const start = async () => {
     try{ 
 
-        await mongoose.connect(process.env.CONNECTION_MONGO);
+        // await mongoose.connect(process.env.CONNECTION_MONGO);
 
         app.listen(PORT,() => {
             console.log('The application is listening '
