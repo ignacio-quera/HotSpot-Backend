@@ -50,7 +50,6 @@ app.get('/', (req, res) => {
 
 const start = async () => {
     try{ 
-
         await mongoose.connect(process.env.CONNECTION_MONGO);
 
         app.listen(PORT,() => {

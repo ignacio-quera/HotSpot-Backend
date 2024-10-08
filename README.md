@@ -17,18 +17,19 @@ npm run dev
 
 Para resetear el back mientras esta corriendo pongan `rs` en el terminal
 
-Se requiere la variable `PORT` en el `.env` (eg. `PORT=3001`)
+## Variables de entorno
 
-Se requiere el URL de la BDD en `CONNECTION_MONGO`.
-Hay una bdd deployeada online.
-Se puede correr una local con el comando:
+Se requiere un archivo `.env` con:
+
+- `PORT`: Por ejemplo, `PORT=3001`.
+- `CONNECTION_MONGO`: URL a la instancia de MongoDB. Por ejemplo si se corre local, `mongodb://localhost:27017/`.
+- `TOKEN_SECRET`: String aleatoria secreta para firmar los tokens.
+
+## Correr MongoDB local
+
+Es posible usar la instancia en la nube de Mongo.
+También es posible correr una instancia local, con el comando:
 
 ```sh
 docker run --name mongodb -d -p 27017:27017 mongodb/mongodb-community-server:6.0-ubi8
-```
-
-Y el siguiente valor para `CONNECTION_MONGO`:
-
-```sh
-CONNECTION_MONGO = 'mongodb://localhost:27017/'
 ```

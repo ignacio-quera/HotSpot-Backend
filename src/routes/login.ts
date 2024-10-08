@@ -38,6 +38,7 @@ router.post('/login', async (req: Request, res: Response) => {
             data: {token}
         })
     } catch (error) {
+        console.error(error)
         return res.status(500).json({ error: 'Error en el servidor' });
     }
 })
