@@ -1,14 +1,13 @@
-const router = require('express').Router();
 import { Router, Request, Response } from 'express'
+export const dashboadRoutes = Router()
 
-router.get('/', (req: Request, res: Response) => {
+dashboadRoutes.get('/dashboard', (req: Request, res: Response) => {
     res.json({
         error: null,
         data: {
             title: 'mi ruta protegida',
-            user: req.User
+            user: req.body.User
         }
     })
 })
 
-module.exports = router

@@ -2,10 +2,9 @@
 import express from 'express';
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const registerRoutes = require('./routes/register');
-const loginRoutes = require('./routes/login');
-const dashboadRoutes = require('./routes/dashboard');
-const verifyToken = require('./routes/validate-token');
+import { routes } from './routes';
+
+const verifyToken = require('./helpers/validate-token');
 const app = express();
 
 mongoose.set('strictQuery', false);
@@ -19,12 +18,7 @@ const PORT = process.env.PORT || 3000;
 
 // Usar las rutas
 app.use(express.json());
-app.use('/api/user', registerRoutes);  // Ruta para registro
-app.use('/api/user', loginRoutes);     // Ruta para login
-
-// Middlewares
-app.use('/api/dashboard', verifyToken, dashboadRoutes);
-
+app.use('/', routes);
 
 // Handling GET / Request
 app.get('/', (req, res) => {
