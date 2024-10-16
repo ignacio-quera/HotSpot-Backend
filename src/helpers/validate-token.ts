@@ -8,8 +8,8 @@ declare module 'express' {
     }
   }
 
-// middleware to validate token (rutas protegidas)
-const verifyToken = (req: Request, res: Response, next: NextFunction ) => {
+
+export const verifyToken = (req: Request, res: Response, next: NextFunction ) => {
     const token = req.header('auth-token')
     if (!token) return res.status(401).json({ error: 'Acceso denegado' })
     try {
@@ -20,5 +20,3 @@ const verifyToken = (req: Request, res: Response, next: NextFunction ) => {
         res.status(400).json({error: 'token no es válido'})
     }
 }
-
-module.exports = verifyToken;
