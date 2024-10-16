@@ -1,13 +1,5 @@
-import { Router, Request, Response } from 'express'
+import { Router } from 'express'
 export const dashboadRoutes = Router()
+import { dashboardGetController } from '../controllers/dashboardControllers'
 
-dashboadRoutes.get('/dashboard', (req: Request, res: Response) => {
-    res.json({
-        error: null,
-        data: {
-            title: 'mi ruta protegida',
-            user: req.body.User
-        }
-    })
-})
-
+dashboadRoutes.get('/dashboard', dashboardGetController)
