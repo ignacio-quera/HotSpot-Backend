@@ -2,8 +2,13 @@ import { Request, Response } from 'express';
 const { Event } = require('../models/events');
 
 export const eventsGetController = async (req: Request, res: Response) => {
-    const events = await Event.find();
-    res.json(events);
+    try {
+        const events = await Event.find();
+        res.json(events);
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: 'Error interno' })
+    }
 }
 
 export const eventGetController = async (req: Request, res: Response) => {
@@ -14,6 +19,7 @@ export const eventGetController = async (req: Request, res: Response) => {
         }
         res.json(event);
     } catch (error) {
+        console.error(error)
         res.status(400).json({ error: 'Error al obtener evento' });
     }
 }
@@ -29,6 +35,7 @@ export const eventPostController = async (req: Request, res: Response) => {
         const savedEvent = await event.save();
         res.json(savedEvent);
     } catch (error) {
+        console.error(error)
         res.status(400).json({ error: 'Error al crear evento' });
     }
 }
@@ -38,6 +45,7 @@ export const eventDeleteController = async (req: Request, res: Response) => {
         const event = await Event.findByIdAndDelete(req.params.id);
         res.json(event);
     } catch (error) {
+        console.error(error)
         res.status(400).json({ error: 'Error al eliminar evento' });
     }
 }
@@ -51,6 +59,7 @@ export const eventPutController = async (req: Request, res: Response) => {
         await event.save();
         res.json(event);
     } catch (error) {
+        console.error(error)
         res.status(400).json({ error: 'Error al actualizar evento' });
     }
 } 

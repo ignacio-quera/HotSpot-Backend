@@ -1,7 +1,17 @@
-export {};
+export { };
 const mongoose = require('mongoose');
 
 const eventSchema = mongoose.Schema({
+    coordinates: {
+        latitude: {
+            type: Number,
+            required: true,
+        },
+        longitude: {
+            type: Number,
+            required: true,
+        },
+    },
     title: {
         type: String,
         required: true,
@@ -14,18 +24,11 @@ const eventSchema = mongoose.Schema({
         min: 6,
         max: 1024
     },
+    tags: [String],
     date: {
         type: Date,
         default: Date.now
     },
-    tags: {
-        type: Array,
-        required: false
-    },
-    coordinates: {
-        type: [Number],
-        default: [0, 0]
-    }
 })
 
 module.exports = mongoose.model('Event', eventSchema);

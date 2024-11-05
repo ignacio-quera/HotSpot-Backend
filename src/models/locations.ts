@@ -1,8 +1,18 @@
-export {};
+export { };
 const mongoose = require('mongoose');
 
 const locationSchema = mongoose.Schema({
-    name: {
+    coordinates: {
+        latitude: {
+            type: Number,
+            required: true,
+        },
+        longitude: {
+            type: Number,
+            required: true,
+        },
+    },
+    title: {
         type: String,
         required: true,
         min: 6,
@@ -14,15 +24,8 @@ const locationSchema = mongoose.Schema({
         min: 6,
         max: 1024
     },
-    coordinates: {
-        type: [Number],
-        default: [0, 0]
-    },
-    tags: {
-        type: Array,
-        required: false
-    },
-    score : {
+    tags: [String],
+    score: {
         type: Number,
         default: -1
     },
