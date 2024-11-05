@@ -1,13 +1,9 @@
 import { Request, Response } from 'express';
-const { Event } = require('../../models/events');
+const { Event } = require('../models/events');
 
 export const eventsGetController = async (req: Request, res: Response) => {
-    try {
-        const events = await Event.find();
-        res.json(events);
-    } catch (error) {
-        res.status(500).json({ error: 'Error en el servidor' });
-    }
+    const events = await Event.find();
+    res.json(events);
 }
 
 export const eventGetController = async (req: Request, res: Response) => {
@@ -32,7 +28,7 @@ export const eventPostController = async (req: Request, res: Response) => {
         });
         const savedEvent = await event.save();
         res.json(savedEvent);
-    }  catch (error) {
+    } catch (error) {
         res.status(400).json({ error: 'Error al crear evento' });
     }
 }
