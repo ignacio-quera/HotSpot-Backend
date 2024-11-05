@@ -1,7 +1,7 @@
 export { };
 const mongoose = require('mongoose');
 
-const eventSchema = mongoose.Schema({
+const eventSchema = new mongoose.Schema({
     coordinates: {
         latitude: {
             type: Number,

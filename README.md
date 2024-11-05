@@ -11,8 +11,9 @@ Pswrd: `9q9pFtCz3OdajkyX`
 ## Para correr local
 
 Para correr el back:
+
 ```sh
-npm run dev
+npm install & npm run dev
 ```
 
 Para resetear el back mientras esta corriendo pongan `rs` en el terminal

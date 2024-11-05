@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-const { Event } = require('../models/events');
+const  Event  = require('../models/events');
 
 export const eventsGetController = async (req: Request, res: Response) => {
     try {
@@ -13,7 +13,7 @@ export const eventsGetController = async (req: Request, res: Response) => {
 
 export const eventGetController = async (req: Request, res: Response) => {
     try {
-        const event = await Event.findById(req.params.id);
+        const event = await Event.findById(parseInt(req.params.id));
         if (!event) {
             return res.status(404).json({ error: 'Evento no encontrado' });
         }
