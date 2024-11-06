@@ -27,7 +27,7 @@ export const locationPostController = async (req: Request, res: Response) => {
         const location = new Location({
             title: req.body.title,
             description: req.body.description,
-            tags: req.body.tags,
+            category: req.body.category,
             coordinates: req.body.coordinates
         });
         const savedLocation = await location.save();
