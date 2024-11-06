@@ -24,7 +24,10 @@ const eventSchema = new mongoose.Schema({
         min: 6,
         max: 1024
     },
-    tags: [String],
+    categorie: {
+        type: String,
+        required: true,
+    },
     date: {
         type: Date,
         default: Date.now
