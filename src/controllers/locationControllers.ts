@@ -33,6 +33,7 @@ export const locationPostController = async (req: Request, res: Response) => {
         const savedLocation = await location.save();
         res.json(savedLocation);
     } catch (error) {
+        console.log(error)
         res.status(400).json({ error: "Error al crear ubicación" });
     }
 };
