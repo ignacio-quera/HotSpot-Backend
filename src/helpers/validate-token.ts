@@ -10,7 +10,11 @@ declare module 'express' {
 
 
 export const verifyToken = (req: Request, res: Response, next: NextFunction ) => {
-    const token = req.header('auth-token')
+
+    const authHeader = req.headers.authorization;
+
+    const token = authHeader?.split(' ')[1]
+    
     if (!token) return res.status(401).json({ error: 'Acceso denegado' })
     try {
         const verified = jwt.verify(token, process.env.TOKEN_SECRET)
