@@ -4,6 +4,7 @@ import { registerRoutes } from './register.routes';
 import { dashboadRoutes } from './dashboard.routes';
 import { eventRoutes } from './event.routes';
 import { locationRoutes } from './location.routes';
+import { locationReviewRoutes } from './locationReview.routes';
 
 export const routes = express.Router();
 
@@ -12,3 +13,4 @@ routes.use(registerRoutes);
 routes.use(dashboadRoutes);
 routes.use(eventRoutes);
 routes.use(locationRoutes);
+routes.use(locationReviewRoutes);
