@@ -24,7 +24,10 @@ const locationSchema = mongoose.Schema({
         min: 6,
         max: 1024
     },
-    tags: [String],
+    category: {
+        type: String,
+        required: true,
+    },
     score: {
         type: Number,
         default: -1
