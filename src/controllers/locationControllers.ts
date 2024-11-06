@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-const { Location } = require("../models/locations");
+const  Location = require("../models/locations");
 
 export const locationsGetController = async (req: Request, res: Response) => {
     try {

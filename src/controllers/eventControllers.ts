@@ -30,7 +30,8 @@ export const eventPostController = async (req: Request, res: Response) => {
             title: req.body.title,
             description: req.body.description,
             tags: req.body.tags,
-            coordinates: req.body.coordinates
+            coordinates: req.body.coordinates,
+            date: req.body.date
         });
         const savedEvent = await event.save();
         res.json(savedEvent);
