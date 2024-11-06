@@ -9,8 +9,8 @@ import {
  } from '../controllers/eventControllers'
 import { verifyToken } from '../helpers/validate-token'
 
-eventRoutes.get('/events/', verifyToken, eventsGetController)
+eventRoutes.get('/events/', eventsGetController)
 eventRoutes.post('/events', verifyToken, eventPostController)
-eventRoutes.get('/events/:id', verifyToken, eventGetController)
+eventRoutes.get('/events/:id', eventGetController)
 eventRoutes.delete('/events/:id', verifyToken, eventDeleteController)
 eventRoutes.put('/events/:id', verifyToken, eventPutController)
