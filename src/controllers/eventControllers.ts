@@ -29,7 +29,7 @@ export const eventPostController = async (req: Request, res: Response) => {
         const event = new Event({
             title: req.body.title,
             description: req.body.description,
-            tags: req.body.tags,
+            category: req.body.category,
             coordinates: req.body.coordinates,
             date: req.body.date
         });

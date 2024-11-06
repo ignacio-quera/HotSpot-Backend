@@ -24,7 +24,7 @@ const eventSchema = new mongoose.Schema({
         min: 6,
         max: 1024
     },
-    categorie: {
+    category: {
         type: String,
         required: true,
     },
