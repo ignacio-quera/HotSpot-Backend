@@ -29,11 +29,12 @@ export const locationReviewPostController = async (req: Request, res: Response) 
             title: req.body.title,
             description: req.body.description,
             locationId: req.params.locationId,
-            rating: req.body.rating
+            rating: req.body.rating,
+            userId: req.User._id
         });
         const savedLocationReview = await locationReview.save();
+        await updateLocationScore(req.params.locationId);
         res.json(savedLocationReview);
-        await updateLocationScore(req.body.locationId);
     } catch (error) {
         console.log(error)
         res.status(400).json({ error: "Error al crear reseña" });

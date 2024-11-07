@@ -15,8 +15,9 @@ export const updateLocationScore = async (locationId: string) => {
             totalSum += review.rating;
         }
         const averageScore = totalSum / reviews.length;
-        await Location.update({ _id: locationId }, { score: averageScore });
+        await Location.findByIdAndUpdate(locationId , { score: averageScore });    
     } catch (error) {
+        console.log(error);
         throw new Error('Error updating location score');
     }
 };
