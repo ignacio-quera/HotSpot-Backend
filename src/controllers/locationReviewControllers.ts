@@ -4,7 +4,8 @@ import { updateLocationScore } from "../helpers/locationReviewHelpers";
 
 export const locationReviewsGetController = async (req: Request, res: Response) => {
     try {
-        const locationReviews = await LocationReview.find({where: {locationId: req.params.locationId}});
+        const locationId = req.params.locationId;
+        const locationReviews = await LocationReview.find({ locationId });
         res.json(locationReviews);
     } catch (error) {
         res.status(500).json({ error: "Error en el servidor" });
@@ -17,8 +18,9 @@ export const locationReviewGetController = async (req: Request, res: Response) =
         if (!locationReview) {
             return res.status(404).json({ error: "Review no encontrada" });
         }
-        res.json(location);
+        res.json(locationReview);
     } catch (error) {
+        console.log(error)
         res.status(400).json({ error: "Error al obtener reseña" });
     }
 };
@@ -54,12 +56,14 @@ export const locationReviewDeleteController = async (req: Request, res: Response
 
 export const locationReviewPutController = async (req: Request, res: Response) => {
     try {
-        const location = await LocationReview.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (!location) {
+        const locationReview = await LocationReview.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!locationReview) {
             return res.status(404).json({ error: "Reseña no encontrada" });
         }
-        await location.save();
-        res.json(location);
+        await locationReview.save();
+        const locationId = locationReview.locationId;
+        await updateLocationScore(locationId);
+        res.json(locationReview);
     } catch (error) {
         res.status(400).json({ error: "Error al actualizar reseña" });
     }

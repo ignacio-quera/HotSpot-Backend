@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 const  Location = require("../models/locations");
+const LocationReview = require("../models/locationReviews");
 
 export const locationsGetController = async (req: Request, res: Response) => {
     try {
@@ -41,7 +42,10 @@ export const locationPostController = async (req: Request, res: Response) => {
 
 export const locationDeleteController = async (req: Request, res: Response) => {
     try {
-        const location = await Location.findByIdAndDelete(req.params.id);
+        const locationId = req.params.id;
+        const location = await Location.findByIdAndDelete(locationId);
+        const deletedLocationReviews = await LocationReview.deleteMany({ locationId });
+        console.log(deletedLocationReviews);
         res.json(location);
     } catch (error) {
         res.status(400).json({ error: "Error al eliminar ubicación" });
