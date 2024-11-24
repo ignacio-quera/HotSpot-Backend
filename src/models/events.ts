@@ -36,6 +36,7 @@ const eventSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    subscribers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 })
 
 module.exports = mongoose.model('Event', eventSchema);

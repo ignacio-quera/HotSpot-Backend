@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 const Event = require('../models/events');
+const User = require('../models/user');
 
 export const eventsGetController = async (req: Request, res: Response) => {
     try {
@@ -64,3 +65,54 @@ export const eventPutController = async (req: Request, res: Response) => {
         res.status(400).json({ error: 'Error al actualizar evento' });
     }
 } 
+
+export const eventSubscribeController = async (req: Request, res: Response) => {
+    try {
+        const event = await
+        Event.findByIdAndUpdate(req.body.eventId, { $push: { subscribers: req.User._id } }, { new: true });
+        if (!event) {
+            return res.status(404).json({ error: 'Evento no encontrado' });
+        }
+        await event.save();
+
+        const user = await User.findByIdAndUpdate(req.User._id, { $push: { subscribedEvents: req.body.eventId } }, { new: true });
+        if (!user) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+        await user.save();
+
+        res.status(200).json({ message: 'Usuario suscrito al evento' });
+        res.json(event);
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({ error: 'Error al suscribirse al evento' });
+    }
+}
+
+export const eventUnsubscribeController = async (req: Request, res: Response) => {
+    try {
+        const event = await
+        Event.findByIdAndUpdate
+        (req.body.eventId, { $pull: { subscribers: req.User._id } }, { new: true });
+        if (!event) {
+            return res.status(404).json({ error: 'Evento no encontrado' });
+        }
+
+        await event.save();
+
+        const user = await
+        User.findByIdAndUpdate(req.User._id, { $pull: { subscribedEvents: req.body.eventId } }, { new: true });
+
+        if (!user) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+        await user.save();
+        res.status(200).json({ message: 'Usuario desuscrito del evento' });
+        res.json(event);
+
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({ error: 'Error al desuscribirse del evento' });
+    }
+}

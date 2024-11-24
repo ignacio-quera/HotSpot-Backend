@@ -1,3 +1,5 @@
+import { subscribe } from "diagnostics_channel";
+
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
@@ -21,7 +23,13 @@ const userSchema = mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    subscribedEvents: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Event'
+        }
+    ]
 })
 
 module.exports = mongoose.model('User', userSchema);
