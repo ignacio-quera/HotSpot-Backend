@@ -5,7 +5,11 @@ import {
     eventGetController,
     eventPostController,
     eventDeleteController,
-    eventPutController
+    eventPutController,
+    eventSubscribeController,
+    eventUnsubscribeController,
+    eventLikeController,
+    eventUnlikeController
  } from '../controllers/eventControllers'
 import { verifyToken } from '../helpers/validate-token'
 
@@ -15,5 +19,10 @@ eventRoutes.get('/events/:id', eventGetController)
 eventRoutes.delete('/events/:id', verifyToken, eventDeleteController)
 eventRoutes.put('/events/:id', verifyToken, eventPutController)
 
-eventRoutes.post('/events/subscribe', verifyToken, eventPostController)
-eventRoutes.post('/events/unsubscribe', verifyToken, eventPostController)
+// Subscribe and unsubscribe routes
+eventRoutes.post('/events/subscribe', verifyToken, eventSubscribeController)
+eventRoutes.post('/events/unsubscribe', verifyToken, eventUnsubscribeController)
+
+// Likes routes
+eventRoutes.post('/events/like/:id', verifyToken, eventLikeController)
+eventRoutes.post('/events/unlike/:id', verifyToken, eventUnlikeController)

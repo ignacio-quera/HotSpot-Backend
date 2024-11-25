@@ -116,3 +116,48 @@ export const eventUnsubscribeController = async (req: Request, res: Response) =>
         res.status(400).json({ error: 'Error al desuscribirse del evento' });
     }
 }
+
+export const eventLikeController = async (req: Request, res: Response) => {
+    try {
+        const event = await Event.findByIdAndUpdate
+        (req.body.eventId, { $push: { points: req.User._id } }, { new: true });
+
+        if (!event) {
+            return res.status(404).json({ error: 'Evento no encontrado' });
+        }
+
+        if (event.points.includes(req.User._id)) {
+            return res.status(400).json({ error: 'El usuario ya ha dado like a este evento' });
+        }
+
+        await event.save();
+
+        res.status(200).json({ message: 'Like añadido al evento' });
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({ error: 'Error al dar like al evento' });
+    }
+
+}
+
+export const eventUnlikeController = async (req: Request, res: Response) => {
+    try {
+        const event = await Event.findByIdAndUpdate
+        (req.body.eventId, { $pull: { points: req.User._id } }, { new: true });
+
+        if (!event) {
+            return res.status(404).json({ error: 'Evento no encontrado' });
+        }
+
+        if (!event.points.includes(req.User._id)) {
+            return res.status(400).json({ error: 'El usuario no ha dado like a este evento' });
+        }
+
+        await event.save();
+
+        res.status(200).json({ message: 'Like eliminado del evento' });
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({ error: 'Error al quitar like al evento' });
+    }
+}
