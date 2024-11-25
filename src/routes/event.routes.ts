@@ -11,7 +11,9 @@ import { verifyToken } from '../helpers/validate-token'
 
 eventRoutes.get('/events/', eventsGetController)
 eventRoutes.post('/events', verifyToken, eventPostController)
-eventRoutes.post('/events/subscribe', verifyToken, eventPostController)
 eventRoutes.get('/events/:id', eventGetController)
 eventRoutes.delete('/events/:id', verifyToken, eventDeleteController)
 eventRoutes.put('/events/:id', verifyToken, eventPutController)
+
+eventRoutes.post('/events/subscribe', verifyToken, eventPostController)
+eventRoutes.post('/events/unsubscribe', verifyToken, eventPostController)

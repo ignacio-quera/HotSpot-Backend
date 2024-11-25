@@ -13,13 +13,18 @@ const locationReviewSchema = mongoose.Schema({
         max: 1024
     },
     locationId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId, ref: 'Location',
         required: true,
     },
     rating: {
         type: Number,
         required: true,
     },
+    criteria: 
+        [{
+            type: String,
+        }]
+    ,
     userId: {
         type: String,
         required: true,
