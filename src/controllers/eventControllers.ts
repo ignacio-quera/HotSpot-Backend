@@ -119,8 +119,7 @@ export const eventUnsubscribeController = async (req: Request, res: Response) =>
 
 export const eventLikeController = async (req: Request, res: Response) => {
     try {
-        const event = await Event.findByIdAndUpdate
-        (req.body.eventId, { $push: { points: req.User._id } }, { new: true });
+        const event = await Event.findById(req.body.eventId);
 
         if (!event) {
             return res.status(404).json({ error: 'Evento no encontrado' });
@@ -130,6 +129,13 @@ export const eventLikeController = async (req: Request, res: Response) => {
             return res.status(400).json({ error: 'El usuario ya ha dado like a este evento' });
         }
 
+        event.points.push(req.User._id);
+
+        if (event.negpoints.includes(req.User._id)) {
+            event.negpoints.pull(req.User._id);
+        }        
+
+        console.log(event)
         await event.save();
 
         res.status(200).json({ message: 'Like añadido al evento' });
@@ -142,15 +148,24 @@ export const eventLikeController = async (req: Request, res: Response) => {
 
 export const eventUnlikeController = async (req: Request, res: Response) => {
     try {
-        const event = await Event.findByIdAndUpdate
-        (req.body.eventId, { $pull: { points: req.User._id } }, { new: true });
+        const event = await Event.findById(req.body.eventId);
 
         if (!event) {
             return res.status(404).json({ error: 'Evento no encontrado' });
         }
 
-        if (!event.points.includes(req.User._id)) {
-            return res.status(400).json({ error: 'El usuario no ha dado like a este evento' });
+        if (!event.points.includes(req.User._id) && !event.negpoints.includes(req.User._id)) {
+            return res.status(400).json({ error: 'El usuario no ha interactuado con este evento' });
+        }
+
+
+        if (event.points.includes(req.User._id)) {
+            event.points.pull(req.User._id);
+        }
+
+        if (event.negpoints.includes(req.User._id)) {
+            event.negpoints.pull(req.User._id);
+
         }
 
         await event.save();
@@ -161,3 +176,31 @@ export const eventUnlikeController = async (req: Request, res: Response) => {
         res.status(400).json({ error: 'Error al quitar like al evento' });
     }
 }
+
+export const eventDislikeController = async (req: Request, res: Response) => {
+    try {
+        const event = await Event.findById(req.body.eventId);
+
+        if (!event) {
+            return res.status(404).json({ error: 'Evento no encontrado' });
+        }
+
+        if (event.negpoints.includes(req.User._id)) {
+            return res.status(400).json({ error: 'El usuario ya ha dado dislike a este evento' });
+        }
+
+        event.negpoints.push(req.User._id);
+
+        if (event.points.includes(req.User._id)) {
+            event.points.pull(req.User._id);
+        }
+
+        await event.save();
+
+        res.status(200).json({ message: 'Dislike añadido al evento' });
+
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({ error: 'Error al dar dislike al evento' });
+    }
+};

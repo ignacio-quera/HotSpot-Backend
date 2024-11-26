@@ -33,6 +33,7 @@ const eventSchema = new mongoose.Schema({
         default: Date.now
     },
     points: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    negpoints: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     subscribers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 })
 
