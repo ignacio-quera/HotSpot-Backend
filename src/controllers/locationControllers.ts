@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 const  Location = require("../models/locations");
 const LocationReview = require("../models/locationReviews");
 import { generatePresignedUrl } from "../services/imageUploader";
+const { sendPushNotifications } = require('../services/pushNotificationService');
+
 
 export const locationsGetController = async (req: Request, res: Response) => {
     try {
