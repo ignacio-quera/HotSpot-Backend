@@ -2,11 +2,6 @@ export { };
 const mongoose = require('mongoose');
 
 const locationReviewSchema = mongoose.Schema({
-    title: {
-        type: String,
-        min: 6,
-        max: 255
-    },
     description: {
         type: String,
         min: 6,
@@ -20,11 +15,6 @@ const locationReviewSchema = mongoose.Schema({
         type: Number,
         required: true,
     },
-    criteria: 
-        [{
-            type: String,
-        }]
-    ,
     userId: {
         type: String,
         required: true,

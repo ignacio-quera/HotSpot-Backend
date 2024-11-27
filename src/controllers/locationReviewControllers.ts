@@ -27,13 +27,14 @@ export const locationReviewGetController = async (req: Request, res: Response) =
 
 export const locationReviewPostController = async (req: Request, res: Response) => {
     try {
+        console.log(req.body)
         const locationReview = new LocationReview({
-            title: req.body.title,
             description: req.body.description,
             locationId: req.params.locationId,
             rating: req.body.rating,
             userId: req.User._id
         });
+        console.log(locationReview);
         const savedLocationReview = await locationReview.save();
         await updateLocationScore(req.params.locationId);
         res.json(savedLocationReview);
