@@ -137,10 +137,11 @@ export const eventLikeController = async (req: Request, res: Response) => {
         }
 
         if (event.points.includes(req.User._id)) {
-            return res.status(400).json({ error: 'El usuario ya ha dado like a este evento' });
+            event.points.pull(req.User._id);
+            return res.status(204).json({ message: 'Like eliminado del evento' });
         }
 
-        event.points.push(req.User._id);
+        event.points.push(req.User._id);    
 
         if (event.negpoints.includes(req.User._id)) {
             event.negpoints.pull(req.User._id);
@@ -197,6 +198,7 @@ export const eventDislikeController = async (req: Request, res: Response) => {
         }
 
         if (event.negpoints.includes(req.User._id)) {
+            event.negpoints.pull(req.User._id);
             return res.status(204).json({ error: 'El usuario ya ha dado dislike a este evento' });
         }
 
