@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 const Event = require('../models/events');
 const User = require('../models/user');
+const UserEvent = require('../models/userEvents');
 
 export const eventsGetController = async (req: Request, res: Response) => {
     try {
@@ -35,6 +36,14 @@ export const eventPostController = async (req: Request, res: Response) => {
             date: req.body.date
         });
         const savedEvent = await event.save();
+
+        const userEvent = new UserEvent({
+            user: req.User._id,
+            event: savedEvent._id
+        });
+
+        await userEvent.save();
+
         res.json(savedEvent);
     } catch (error) {
         console.error(error)
