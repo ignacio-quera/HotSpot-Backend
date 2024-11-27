@@ -7,7 +7,8 @@ export const registerRoutes = Router();
 const schemaRegister = Joi.object({
     name: Joi.string().min(6).max(255).required(),
     email: Joi.string().min(6).max(255).required().email(),
-    password: Joi.string().min(6).max(1024).required()
+    password: Joi.string().min(6).max(1024).required(),
+    pushToken: Joi.string().optional()
 })
 
 
@@ -41,7 +42,9 @@ export const saveUser = async (req: Request, res: Response, hashedPassword: stri
         const user = new User({
             name: req.body.name,
             email: req.body.email,
-            password: hashedPassword
+            password: hashedPassword,
+            pushToken: req.body.pushToken || null
+
         });
         
         const savedUser = await user.save();

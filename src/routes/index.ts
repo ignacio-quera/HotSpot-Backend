@@ -5,6 +5,7 @@ import { dashboadRoutes } from './dashboard.routes';
 import { eventRoutes } from './event.routes';
 import { locationRoutes } from './location.routes';
 import { locationReviewRoutes } from './locationReview.routes';
+import notificationRoutes from './notifications.routes';
 
 export const routes = express.Router();
 
@@ -14,3 +15,4 @@ routes.use(dashboadRoutes);
 routes.use(eventRoutes);
 routes.use(locationRoutes);
 routes.use(locationReviewRoutes);
+routes.use(notificationRoutes);

@@ -2,6 +2,15 @@ import { Request, Response } from 'express';
 const Event = require('../models/events');
 const User = require('../models/user');
 const UserEvent = require('../models/userEvents');
+const { sendPushNotifications } = require('../services/pushNotificationService');
+
+interface IUser {
+    _id: string;
+    name?: string;
+    email?: string;
+    pushToken?: string;
+}
+
 
 export const eventsGetController = async (req: Request, res: Response) => {
     try {
@@ -45,6 +54,22 @@ export const eventPostController = async (req: Request, res: Response) => {
         });
 
         await userEvent.save();
+
+        const users = await User.find({ pushToken: { $exists: true, $ne: null } }) as IUser[];
+        console.log('Users with push tokens:', users);
+        const pushTokens = users.map((user: IUser) => user.pushToken);
+
+
+        const message = {
+            title: 'New Event Added!',
+            body: `Check out the new event: ${event.title}`,
+            data: { eventId: event._id }
+        };
+
+        if (pushTokens.length > 0) {
+            await sendPushNotifications(pushTokens, message);
+        }
+
 
         res.json(event);
     } catch (error) {
