@@ -35,16 +35,18 @@ export const eventPostController = async (req: Request, res: Response) => {
             coordinates: req.body.coordinates,
             date: req.body.date
         });
-        const savedEvent = await event.save();
+
+
+        await event.save();
 
         const userEvent = new UserEvent({
-            user: req.User._id,
-            event: savedEvent._id
+            userId: req.User._id,
+            eventId: event._id
         });
 
         await userEvent.save();
 
-        res.json(savedEvent);
+        res.json(event);
     } catch (error) {
         console.error(error)
         res.status(400).json({ error: 'Error al crear evento' });
@@ -147,7 +149,7 @@ export const eventLikeController = async (req: Request, res: Response) => {
         console.log(event)
         await event.save();
 
-        res.status(200).json({ message: 'Like añadido al evento' });
+        res.status(204).json({ message: 'Like añadido al evento' });
     } catch (error) {
         console.error(error)
         res.status(400).json({ error: 'Error al dar like al evento' });
@@ -164,7 +166,7 @@ export const eventUnlikeController = async (req: Request, res: Response) => {
         }
 
         if (!event.points.includes(req.User._id) && !event.negpoints.includes(req.User._id)) {
-            return res.status(400).json({ error: 'El usuario no ha interactuado con este evento' });
+            return res.status(204).json({ error: 'El usuario no ha interactuado con este evento' });
         }
 
 
@@ -195,7 +197,7 @@ export const eventDislikeController = async (req: Request, res: Response) => {
         }
 
         if (event.negpoints.includes(req.User._id)) {
-            return res.status(400).json({ error: 'El usuario ya ha dado dislike a este evento' });
+            return res.status(204).json({ error: 'El usuario ya ha dado dislike a este evento' });
         }
 
         event.negpoints.push(req.User._id);

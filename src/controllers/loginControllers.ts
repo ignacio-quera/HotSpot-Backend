@@ -20,7 +20,7 @@ export const loginPostController = async (req: Request, res: Response) => {
         // Enviar Response
         res.header('auth-token', token).json({
             error: null,
-            data: { token }
+            data: { token, id: user._id }
         });
     } catch (error) {
         return res.status(500).json({ error: 'Error en el servidor' });
